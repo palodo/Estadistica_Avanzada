@@ -41,9 +41,7 @@ El **USG%** se utiliza para evaluar cuán involucrado está un jugador en la ofe
 
 El **eFG%** es una métrica que ajusta el porcentaje de tiros de campo (Field Goal Percentage) para tener en cuenta los tiros de tres puntos, que valen más que los tiros de dos puntos. Se calcula con la siguiente fórmula:
 
-\[
-eFG\% = rac{FGM + 0.5 	imes 3PM}{FGA}
-\]
+USG% = 100 × [ (FGA + 0.44 × FTA + TOV) × (Team Minutes / 5) ] / (Player Minutes × (Team FGA + 0.44 × Team FTA + Team TOV))
 
 **Variables:**
 
