@@ -1,153 +1,83 @@
-Estadísticas Avanzadas de Baloncesto
-Este proyecto tiene como objetivo calcular estadísticas avanzadas para jugadores de baloncesto utilizando datos extraídos de una página web.
 
-Estadísticas Implementadas
-1. USG% (Uso de Jugador)
-USG% mide el porcentaje de posesiones de un equipo que un jugador utiliza mientras está en el campo. Indica cuántas veces un jugador está involucrado en la creación de tiros, incluyendo intentos de tiro, tiros libres y pérdidas de balón.
+# Proyecto Estadísticas de Baloncesto
 
-Fórmula:
-𝑈
-𝑆
-𝐺
-%
-=
-100
-×
-(
-𝐹
-𝐺
-𝐴
-+
-0.44
-×
-𝐹
-𝑇
-𝐴
-+
-𝑇
-𝑂
-𝑉
-)
-×
-𝑇
-𝑒
-𝑎
-𝑚
- 
-𝑀
-𝑖
-𝑛
-𝑢
-𝑡
-𝑒
-𝑠
-5
-𝑃
-𝑙
-𝑎
-𝑦
-𝑒
-𝑟
- 
-𝑀
-𝑖
-𝑛
-𝑢
-𝑡
-𝑒
-𝑠
-×
-(
-𝑇
-𝑒
-𝑎
-𝑚
- 
-𝐹
-𝐺
-𝐴
-+
-0.44
-×
-𝑇
-𝑒
-𝑎
-𝑚
- 
-𝐹
-𝑇
-𝐴
-+
-𝑇
-𝑒
-𝑎
-𝑚
- 
-𝑇
-𝑂
-𝑉
-)
-USG%=100× 
-Player Minutes×(Team FGA+0.44×Team FTA+Team TOV)
-(FGA+0.44×FTA+TOV)× 
-5
-Team Minutes
-​
- 
-​
- 
-Donde:
+Este proyecto tiene como objetivo obtener, analizar y calcular estadísticas avanzadas de baloncesto de los jugadores de la liga EBA. Las estadísticas se obtienen a través de web scraping de la página de la Federación Española de Baloncesto (FEB). 
 
-FGA: Intentos de tiro de campo (Field Goals Attempted).
+## Requisitos
 
-FTA: Intentos de tiro libre (Free Throws Attempted).
+Para ejecutar este proyecto, necesitarás tener instaladas las siguientes librerías de Python:
 
-TOV: Pérdidas de balón (Turnovers).
+- `pandas`
+- `beautifulsoup4`
+- `requests`
 
-Team Minutes: Minutos totales jugados por el equipo.
+Puedes instalar estas dependencias con pip:
 
-Player Minutes: Minutos jugados por el jugador.
+```bash
+pip install pandas beautifulsoup4 requests
+```
 
-Team FGA: Intentos de tiro de campo del equipo.
+## Descripción de las Estadísticas Avanzadas
 
-Team FTA: Intentos de tiro libre del equipo.
+### USG% (Usage Percentage)
 
-Team TOV: Pérdidas de balón del equipo.
+El **USG%** es una medida que indica el porcentaje de jugadas ofensivas en las que un jugador está involucrado mientras está en la cancha. Se calcula con la siguiente fórmula:
 
-Nota: Esta fórmula tiene en cuenta que las pérdidas de balón también deben considerarse como parte del uso del jugador.
+\[
+USG\% = 100 	imes rac{(FGA + 0.44 	imes FTA + TOV) 	imes (Team \, Minutes / 5)}{(Player \, Minutes 	imes (Team \, FGA + 0.44 	imes Team \, FTA + Team \, TOV))}
+\]
 
-2. eFG% (Porcentaje de Tiro Efectivo)
-eFG% ajusta el porcentaje de tiros de campo para tener en cuenta que los triples valen más que los dobles. Es una medida más precisa de la eficiencia de un jugador al realizar tiros.
+**Variables:**
 
-Fórmula:
-𝑒
-𝐹
-𝐺
-%
-=
-𝑇
-2
- encestados
-+
-1.5
-×
-𝑇
-3
- encestados
-𝐹
-𝐺
-𝐴
-eFG%= 
-FGA
-T2 encestados+1.5×T3 encestados
-​
- 
-Donde:
+- `FGA`: Intentos de tiros de campo (Field Goal Attempts)
+- `FTA`: Intentos de tiros libres (Free Throw Attempts)
+- `TOV`: Pérdidas de balón (Turnovers)
+- `Team Minutes`: Minutos totales jugados por el equipo
+- `Player Minutes`: Minutos jugados por el jugador
 
-T2 encestados: Canastas de 2 puntos encestadas.
+El **USG%** se utiliza para evaluar cuán involucrado está un jugador en la ofensiva de su equipo. Un porcentaje alto indica que el jugador es muy importante en las jugadas ofensivas.
 
-T3 encestados: Canastas de 3 puntos encestadas.
+### eFG% (Effective Field Goal Percentage)
 
-FGA: Intentos de tiro de campo (Field Goals Attempted).
+El **eFG%** es una métrica que ajusta el porcentaje de tiros de campo (Field Goal Percentage) para tener en cuenta los tiros de tres puntos, que valen más que los tiros de dos puntos. Se calcula con la siguiente fórmula:
 
-Nota: Los triples se ponderan como 1.5 veces más valiosos que los dobles para reflejar mejor la eficiencia en los tiros.
+\[
+eFG\% = rac{FGM + 0.5 	imes 3PM}{FGA}
+\]
+
+**Variables:**
+
+- `FGM`: Tiros de campo convertidos (Field Goals Made)
+- `3PM`: Tiros de tres puntos convertidos (Three-Point Field Goals Made)
+- `FGA`: Intentos de tiros de campo (Field Goal Attempts)
+
+Este porcentaje ajustado refleja mejor la efectividad de un jugador, considerando los tiros de tres puntos como más valiosos que los de dos puntos.
+
+## Funcionalidades
+
+1. **Obtención de Estadísticas:**
+   El proyecto obtiene las estadísticas de los jugadores a través de web scraping de la página de la FEB, utilizando `BeautifulSoup` y `requests`.
+
+2. **Conversión de Minutos:**
+   Los minutos jugados por cada jugador son convertidos de formato `MM:SS` a formato decimal para facilitar los cálculos de las estadísticas avanzadas.
+
+3. **Cálculo de Estadísticas Avanzadas:**
+   Se calculan estadísticas como el **USG%** y el **eFG%** para cada jugador, utilizando los datos obtenidos de la página.
+
+## Ejecución
+
+Para ejecutar el proyecto, simplemente ejecuta el archivo `main.py` en tu terminal:
+
+```bash
+python main.py
+```
+
+El script descargará las estadísticas de los jugadores y calculará las métricas avanzadas de manera automática.
+
+## Contribuciones
+
+Si deseas contribuir al proyecto, siéntete libre de realizar un fork y crear un Pull Request con tus mejoras o correcciones.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT.
