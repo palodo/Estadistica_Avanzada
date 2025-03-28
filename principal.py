@@ -44,6 +44,8 @@ def main():
         #clasificación ) y multiplicarlo por 200.
     }
     print(estadisticas_totales)
+    estadisticas['Minutos_decimal'] = estadisticas['Minutos'].apply(convertir_a_minutos_decimales) #Creamos una columna llamada Minutos_decimal para
+                                                                                                #tener el valor numérico
     estadisticas_avanzadas=calcular_usage_rate(estadisticas, estadisticas_totales)
 
 

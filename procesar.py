@@ -1,3 +1,10 @@
+def convertir_a_minutos_decimales(tiempo):
+    """Convierte un string MM:SS a minutos en decimal."""
+    if isinstance(tiempo, str) and ":" in tiempo:
+        minutos, segundos = map(int, tiempo.split(":"))
+        return minutos + segundos / 60
+
+
 def calcular_usage_rate(df, total_team_stats):
     """
     Calcula el porcentaje de uso (USG%) de cada jugador en base a las estadísticas del equipo.
@@ -18,7 +25,7 @@ def calcular_usage_rate(df, total_team_stats):
         0.44 * df['TL'].apply(lambda x: int(x.split('/')[1])) +  # Intentos de TL ajustados
         df['BP'].astype(int)) * (team_minutes / 5)
     ) / (
-        df['Minutos'].astype(int) * (team_fga + 0.44 * team_fta + team_tov)
+        df['Minutos_decimal'].astype(int) * (team_fga + 0.44 * team_fta + team_tov)#aqui minutos tiene 
     )
 
     return df
