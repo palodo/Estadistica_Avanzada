@@ -34,6 +34,7 @@ def main():
     
    
     partidos_jugados=22
+   
 
     # Convertir a un diccionario de valores clave
     estadisticas_totales = {
@@ -43,6 +44,7 @@ def main():
         'RT':int(totales_equipo['RT']),
         'AS':int(totales_equipo['AS']),
         'BR':int(totales_equipo['BR']),
+        'PT':int(totales_equipo['Puntos']),
         'Minutos': partidos_jugados*200 #Para esto, se me ocurre coger en el web scrapping los partidos jugados del equipo(se puede ver en la
         #clasificación ) y multiplicarlo por 200.
     }
@@ -52,6 +54,16 @@ def main():
     estadisticas_avanzadas=calcular_avanzadas(estadisticas, estadisticas_totales)
     print("\n\n")
     print(estadisticas_avanzadas)
+    print("\n\n")
+
+    #Hay que sacar del web scrapping los puntos permitidos.
+    puntos_permitidos=1413
+    estadisiticas_avanzadas_equipo=calcular_rendimiento_equipo(estadisticas_totales, puntos_permitidos)
+    
+    
+    print(estadisiticas_avanzadas_equipo)
+
+
 
 
 

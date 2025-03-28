@@ -91,6 +91,52 @@ La **eficiencia en tiros de 3 puntos (eT3)** calcula los puntos por intento de t
   <img alt="eT3 Formula" src="https://latex.codecogs.com/svg.latex?eT3=\frac{\text{Tiros\;de\;3\;Convertidos}\times{3}}{\text{Total\;Tiros\;de\;3\;Intentados}}">
 </picture>
 
+### Ritmo (Pace)
+
+El **Ritmo (Pace)** mide el número de posesiones que un equipo realiza por 48 minutos de juego. Esta estadística refleja la velocidad con la que juega el equipo. La fórmula es:
+
+<picture> <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}Ritmo=\frac{(FGA+0.44\times{FTA}+TOV)\times100}{\text{Minutos\;jugados\;por\;el\;equipo}}"> <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?Ritmo=\frac{(FGA+0.44\times{FTA}+TOV)\times100}{\text{Minutos\;jugados\;por\;el\;equipo}}"> <img alt="Ritmo Formula" src="https://latex.codecogs.com/svg.latex?Ritmo=\frac{(FGA+0.44\times{FTA}+TOV)\times100}{\text{Minutos\;jugados\;por\;el\;equipo}}"> </picture>
+
+**Variables:**
+- FGA: Intentos de tiro de campo
+
+- FTA: Intentos de tiros libres
+
+- TOV: Pérdidas de balón
+
+- Minutos jugados por el equipo: El total de minutos jugados por el equipo
+
+### OER (Offensive Efficiency)
+
+La **Eficiencia Ofensiva (OER)** mide cuántos puntos anota un equipo por cada 100 posesiones. Es una medida del rendimiento ofensivo de un equipo. La fórmula es:
+
+$$
+OER = \frac{\text{Puntos Totales} \times 100}{\text{Posesiones Totales}}
+$$
+
+**Variables:**
+
+- `Puntos Totales`: Los puntos anotados por el equipo.
+- `Posesiones Totales`: El número total de posesiones del equipo, calculado con la fórmula del Ritmo (Pace).
+
+---
+
+### DER (Defensive Efficiency)
+
+La **Eficiencia Defensiva (DER)** mide cuántos puntos permite un equipo por cada 100 posesiones. Es una medida del rendimiento defensivo de un equipo. La fórmula es:
+
+$$
+DER = \frac{\text{Puntos Permitidos} \times 100}{\text{Posesiones Totales Permitidas}}
+$$
+
+**Variables:**
+
+- `Puntos Permitidos`: Los puntos permitidos por el equipo a los oponentes.
+- `Posesiones Totales Permitidas`: El número total de posesiones defensivas del equipo, calculado con la fórmula del Ritmo (Pace).
+
+
+
+
 
 
 ## Funcionalidades
