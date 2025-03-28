@@ -27,4 +27,11 @@ def calcular_usage_rate(df, total_team_stats):
         df['Minutos_decimal'].astype(int) * (team_fga + 0.44 * team_fta + team_tov)#aqui minutos tiene 
     )
 
+    #eFG% (Effective Field Goal Percentage - Porcentaje de tiro efectivo)
+
+    df['eFG%'] = ((df['T2'].apply(lambda x: int(x.split('/')[0])) + 
+              1.5 * df['T3'].apply(lambda x: int(x.split('/')[0]))) /
+              (df['T2'].apply(lambda x: int(x.split('/')[1])) + 
+               df['T3'].apply(lambda x: int(x.split('/')[1])))) * 100
+
     return df
