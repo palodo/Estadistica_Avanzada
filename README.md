@@ -24,7 +24,7 @@ pip install pandas beautifulsoup4 requests
 El **USG%** es una medida que indica el porcentaje de jugadas ofensivas en las que un jugador está involucrado mientras está en la cancha. Se calcula con la siguiente fórmula:
 
 \[
-USG\% = 100 	imes rac{(FGA + 0.44 	imes FTA + TOV) 	imes (Team \, Minutes / 5)}{(Player \, Minutes 	imes (Team \, FGA + 0.44 	imes Team \, FTA + Team \, TOV))}
+USG\% = 100 \times \frac{(FGA + 0.44 \times FTA + TOV) \times (\text{Team Minutes} / 5)}{(\text{Player Minutes}) \times (\text{Team FGA} + 0.44 \times \text{Team FTA} + \text{Team TOV})}
 \]
 
 **Variables:**
@@ -41,7 +41,9 @@ El **USG%** se utiliza para evaluar cuán involucrado está un jugador en la ofe
 
 El **eFG%** es una métrica que ajusta el porcentaje de tiros de campo (Field Goal Percentage) para tener en cuenta los tiros de tres puntos, que valen más que los tiros de dos puntos. Se calcula con la siguiente fórmula:
 
-USG% = 100 × [ (FGA + 0.44 × FTA + TOV) × (Team Minutes / 5) ] / (Player Minutes × (Team FGA + 0.44 × Team FTA + Team TOV))
+\[
+eFG\% = frac{FGM + 0.5 	imes 3PM}{FGA}
+\]
 
 **Variables:**
 
