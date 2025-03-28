@@ -35,6 +35,9 @@ def calcular_usage_rate(df, total_team_stats):
                df['T3'].apply(lambda x: int(x.split('/')[1])))) * 100
     
 
+
+    #Seria interesante poner restricciones del estilo, haber tirado 2 o 3 triples por partido.
+
     # eTL   Calcula la eficiencia en tiros libres (Puntos por Intento de Tiro Libre)
     df['eTL'] = df['TL'].apply(lambda x: int(x.split('/')[0]))/df['TL'].apply(lambda x: int(x.split('/')[1]))
 

@@ -43,11 +43,11 @@ def main():
         'Minutos': 4400 #Para esto, se me ocurre coger en el web scrapping los partidos jugados del equipo(se puede ver en la
         #clasificación ) y multiplicarlo por 200.
     }
-    print(estadisticas_totales)
+    #print(estadisticas_totales)
     estadisticas['Minutos_decimal'] = estadisticas['Minutos'].apply(convertir_a_minutos_decimales) #Creamos una columna llamada Minutos_decimal para
                                                                                                 #tener el valor numérico
     estadisticas_avanzadas=calcular_usage_rate(estadisticas, estadisticas_totales)
-    
+    print("\n\n")
     print(estadisticas_avanzadas)
 
 
