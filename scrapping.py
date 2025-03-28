@@ -116,7 +116,7 @@ def obtener_estadisticas(url):
         # Creamos el DataFrame
         df = pd.DataFrame(jugadores_data, columns=[
             "Jugador", "Enlace", "Fase", "Partidos", "Minutos", "Puntos", "T2", "T3", "TC", "TL", 
-            "RO", "RD", "RT", "AS", "BR", "BP", "TF", "TC", "MT", "FC", "FR", "Valoración"
+            "RO", "RD", "RT", "AS", "BR", "BP", "TapF", "TapC", "MT", "FC", "FR", "Valoración"
         ])
         #print(df)
         return df
