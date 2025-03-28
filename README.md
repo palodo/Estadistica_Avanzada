@@ -23,7 +23,11 @@ pip install pandas beautifulsoup4 requests
 
 El **USG%** es una medida que indica el porcentaje de jugadas ofensivas en las que un jugador está involucrado mientras está en la cancha. Se calcula con la siguiente fórmula:
 
-![USG%](https://latex.codecogs.com/svg.latex?USG\%=100\times\frac{(FGA+0.44\times{FTA}+TOV)\times(\text{Team\;Minutes}/5)}{(\text{Player\;Minutes})\times(\text{Team\;FGA}+0.44\times\text{Team\;FTA}+\text{Team\;TOV})})
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}USG\%=100\times\frac{(FGA+0.44\times{FTA}+TOV)\times(\text{Team\;Minutes}/5)}{(\text{Player\;Minutes})\times(\text{Team\;FGA}+0.44\times\text{Team\;FTA}+\text{Team\;TOV})}">
+  <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?USG\%=100\times\frac{(FGA+0.44\times{FTA}+TOV)\times(\text{Team\;Minutes}/5)}{(\text{Player\;Minutes})\times(\text{Team\;FGA}+0.44\times\text{Team\;FTA}+\text{Team\;TOV})}">
+  <img alt="USG% Formula" src="https://latex.codecogs.com/svg.latex?USG\%=100\times\frac{(FGA+0.44\times{FTA}+TOV)\times(\text{Team\;Minutes}/5)}{(\text{Player\;Minutes})\times(\text{Team\;FGA}+0.44\times\text{Team\;FTA}+\text{Team\;TOV})}">
+</picture>
 
 **Variables:**
 
@@ -39,9 +43,11 @@ El **USG%** se utiliza para evaluar cuán involucrado está un jugador en la ofe
 
 El **eFG%** es una métrica que ajusta el porcentaje de tiros de campo (Field Goal Percentage) para tener en cuenta los tiros de tres puntos, que valen más que los tiros de dos puntos. Se calcula con la siguiente fórmula:
 
-\[
-eFG\% = frac{FGM + 0.5 	imes 3PM}{FGA}
-\]
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}eFG\%=\frac{FGM+0.5\times{3PM}}{FGA}">
+  <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?eFG\%=\frac{FGM+0.5\times{3PM}}{FGA}">
+  <img alt="eFG% Formula" src="https://latex.codecogs.com/svg.latex?eFG\%=\frac{FGM+0.5\times{3PM}}{FGA}">
+</picture>
 
 **Variables:**
 
@@ -76,6 +82,3 @@ El script descargará las estadísticas de los jugadores y calculará las métri
 
 Si deseas contribuir al proyecto, siéntete libre de realizar un fork y crear un Pull Request con tus mejoras o correcciones.
 
-## Licencia
-
-Este proyecto está bajo la licencia MIT.
