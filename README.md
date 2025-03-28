@@ -23,9 +23,7 @@ pip install pandas beautifulsoup4 requests
 
 El **USG%** es una medida que indica el porcentaje de jugadas ofensivas en las que un jugador está involucrado mientras está en la cancha. Se calcula con la siguiente fórmula:
 
-\[
-USG\% = 100 \times \frac{(FGA + 0.44 \times FTA + TOV) \times (\text{Team Minutes} / 5)}{(\text{Player Minutes}) \times (\text{Team FGA} + 0.44 \times \text{Team FTA} + \text{Team TOV})}
-\]
+![USG%](https://latex.codecogs.com/svg.latex?USG\%=100\times\frac{(FGA+0.44\times{FTA}+TOV)\times(\text{Team\;Minutes}/5)}{(\text{Player\;Minutes})\times(\text{Team\;FGA}+0.44\times\text{Team\;FTA}+\text{Team\;TOV})})
 
 **Variables:**
 
