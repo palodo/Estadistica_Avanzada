@@ -5,7 +5,7 @@ def convertir_a_minutos_decimales(tiempo):
         return minutos + segundos / 60
 
 
-def calcular_usage_rate(df, total_team_stats):
+def calcular_avanzadas(df, total_team_stats):
     """
     Calcula el porcentaje de uso (USG%) de cada jugador en base a las estadísticas del equipo.
     :param df: DataFrame con estadísticas individuales
