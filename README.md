@@ -59,7 +59,7 @@ Este porcentaje ajustado refleja mejor la efectividad de un jugador, considerand
 
 ### eTL - Eficiencia en Tiros Libres
 
-La **eficiencia en tiros libres (eTL)** calcula el porcentaje de aciertos en tiros libres por intento. La fórmula es:
+La **eficiencia en tiros libres (eTL)** calcula los puntos en tiros libres por intento. La fórmula es:
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}eTL=\frac{\text{Tiros\;Libres\;Convertidos}}{\text{Total\;Tiros\;Libres\;Intentados}}">
