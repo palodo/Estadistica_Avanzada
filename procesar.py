@@ -13,7 +13,6 @@ def calcular_usage_rate(df, total_team_stats):
     :return: DataFrame con la columna USG% añadida
     """
     team_fga = total_team_stats['FGA']
-    print(team_fga)
     team_fta = total_team_stats['FTA']
     team_tov = total_team_stats['TOV']
     team_minutes = total_team_stats['Minutos']

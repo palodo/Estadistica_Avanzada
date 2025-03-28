@@ -47,6 +47,7 @@ def main():
     estadisticas['Minutos_decimal'] = estadisticas['Minutos'].apply(convertir_a_minutos_decimales) #Creamos una columna llamada Minutos_decimal para
                                                                                                 #tener el valor numérico
     estadisticas_avanzadas=calcular_usage_rate(estadisticas, estadisticas_totales)
+    print(estadisticas_avanzadas)
 
 
 
