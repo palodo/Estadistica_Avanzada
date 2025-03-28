@@ -8,12 +8,29 @@ def obtener_equipos(url):
     
     equipos = []
     for fila in soup.select('#_ctl0_MainContentPlaceHolderMaster_clasificacionDataGrid tr')[1:]:  #Vamos a la tabla de clasificación para obtener los equipos
+        #print(fila)
         enlace = fila.find('a')
         if enlace:
             nombre = enlace.text.strip()
             url_equipo = enlace['href']
             equipos.append((nombre, url_equipo))
     return equipos
+
+def obtener_pc_pj(url, nombre):
+    respuesta = requests.get(url)
+    soup = BeautifulSoup(respuesta.text, 'html.parser')
+    
+    equipos = []
+    for fila in soup.select('#_ctl0_MainContentPlaceHolderMaster_clasificacionDataGrid tr')[1:]:
+        enlace = fila.find('a')
+        nombre_equipo = enlace.get_text(strip=True)
+        if nombre == nombre_equipo:
+            celdas = fila.find_all('td')
+            puntos_en_contra = int(celdas[6].text.strip())
+            partidos_jugados = int(celdas[2].text.strip())
+    return puntos_en_contra, partidos_jugados
+
+
 
 def mostrar_menu(equipos):
     print("Selecciona un equipo para analizar:")
@@ -22,6 +39,7 @@ def mostrar_menu(equipos):
     
     eleccion = int(input("Ingresa el número del equipo: ")) - 1
     return equipos[eleccion]
+
 
 
 

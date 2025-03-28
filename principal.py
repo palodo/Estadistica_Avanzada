@@ -19,7 +19,10 @@ def main():
     nombre_seleccionado, url_equipo = mostrar_menu(equipos)
     print(f"Has seleccionado: {nombre_seleccionado}")
     print(f"URL del equipo: {url_equipo}")
+    
+    puntos_permitidos,partidos_jugados=obtener_pc_pj(url_feb,nombre_seleccionado)
 
+    
     id_equipo = obtener_id(url_equipo)
     url_estadisticas = f"https://baloncestoenvivo.feb.es/estadisticasacumuladas/{id_equipo}"
     estadisticas=obtener_estadisticas(url_estadisticas)
@@ -33,7 +36,7 @@ def main():
 
     
    
-    partidos_jugados=22
+    
    
 
     # Convertir a un diccionario de valores clave
@@ -56,8 +59,7 @@ def main():
     print(estadisticas_avanzadas)
     print("\n\n")
 
-    #Hay que sacar del web scrapping los puntos permitidos.
-    puntos_permitidos=1413
+   
     estadisiticas_avanzadas_equipo=calcular_rendimiento_equipo(estadisticas_totales, puntos_permitidos)
     
     
