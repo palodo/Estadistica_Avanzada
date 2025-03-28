@@ -40,7 +40,7 @@ def obtener_estadisticas(url):
         jugadores_data = []
 
         # Buscamos todas las filas de la tabla con las estadísticas (ignoramos la cabecera)
-        rows = soup.find_all("tr")[3:]  # Omite las primeras filas (cabecera y otras)
+        rows = soup.find_all("tr")[2:]  # Omite las primeras filas (cabecera y otras)
 
         for row in rows:
             cols = row.find_all("td")
