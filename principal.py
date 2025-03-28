@@ -6,9 +6,11 @@ import pandas as pd
 from datetime import timedelta
 
 
+
 #Carga funciones
 
 from scrapping import *
+from procesar import *
 
 
 def main():
