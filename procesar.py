@@ -49,9 +49,50 @@ def calcular_avanzadas(df, total_team_stats):
 
 
     
-
-
-
-
-
     return df
+
+
+
+
+def calcular_estadisticas_avanzadas_equipo(df, total_team_stats):
+    """
+    Calcula las estadísticas avanzadas del equipo basadas en los totales del equipo.
+    :param df: DataFrame con estadísticas individuales
+    :param total_team_stats: Diccionario con estadísticas totales del equipo
+    :return: Diccionario con las estadísticas avanzadas del equipo
+    """
+    
+    # Totales del equipo (última fila)
+    totales_equipo = df.iloc[-1]
+    
+    # **True Shooting Percentage (TS%)**
+    # TS% = PTS / (2 * (FGA + 0.44 * FTA))
+    ts_pct = totales_equipo['PTS'] / (2 * (totales_equipo['FGA'] + 0.44 * totales_equipo['FTA'])) * 100
+    
+    # **Eficiencia de equipo**
+    # Eficiencia = PTS / (FGA + FTA + TOV)
+    eficiencia_equipo = totales_equipo['PTS'] / (totales_equipo['FGA'] + totales_equipo['FTA'] + totales_equipo['TOV'])
+    
+    # **Offensive Rating (ORtg)**
+    # ORtg = PTS * 100 / (FGA + 0.44 * FTA + TOV)
+    ortg = totales_equipo['PTS'] * 100 / (totales_equipo['FGA'] + 0.44 * totales_equipo['FTA'] + totales_equipo['TOV'])
+    
+    # **Defensive Rating (DRtg)**
+    # DRtg = (PTS en contra * 100) / (FGA + 0.44 * FTA + TOV)  (Suponiendo que tienes datos de puntos en contra)
+    # Si no tienes datos de puntos en contra, este puede ser un cálculo más complicado. Aquí se simplifica.
+    drtg = (totales_equipo['PTS'] * 100) / (totales_equipo['FGA'] + 0.44 * totales_equipo['FTA'] + totales_equipo['TOV'])
+    
+    # **Pace (Ritmo de juego)**
+    # Pace = (FGA + (0.44 * FTA) + TOV) / minutos jugados (por equipo)
+    pace = (totales_equipo['FGA'] + (0.44 * totales_equipo['FTA']) + totales_equipo['TOV']) / totales_equipo['Minutos']
+    
+    # Crear un diccionario con las estadísticas avanzadas del equipo
+    estadisticas_avanzadas_equipo = {
+        'TS%': ts_pct,
+        'Eficiencia': eficiencia_equipo,
+        'ORtg': ortg,
+        'DRtg': drtg,
+        'Pace': pace
+    }
+    
+    return estadisticas_avanzadas_equipo

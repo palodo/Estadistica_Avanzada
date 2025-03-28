@@ -33,14 +33,17 @@ def main():
 
     
    
-
+    partidos_jugados=22
 
     # Convertir a un diccionario de valores clave
     estadisticas_totales = {
-        'FGA': int(totales_equipo['T2'].split('/')[1]) + int(totales_equipo['T3'].split('/')[1]),
+        'FGA': int(totales_equipo['T2'].split('/')[1]) + int(totales_equipo['T3'].split('/')[1]), #podría haber cogido dirctmente de TC
         'FTA': int(totales_equipo['TL'].split('/')[1]),
         'TOV': int(totales_equipo['BP']),
-        'Minutos': 4400 #Para esto, se me ocurre coger en el web scrapping los partidos jugados del equipo(se puede ver en la
+        'RT':int(totales_equipo['RT']),
+        'AS':int(totales_equipo['AS']),
+        'BR':int(totales_equipo['BR']),
+        'Minutos': partidos_jugados*200 #Para esto, se me ocurre coger en el web scrapping los partidos jugados del equipo(se puede ver en la
         #clasificación ) y multiplicarlo por 200.
     }
     #print(estadisticas_totales)
