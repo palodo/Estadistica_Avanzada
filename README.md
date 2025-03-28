@@ -57,6 +57,42 @@ El **eFG%** es una métrica que ajusta el porcentaje de tiros de campo (Field Go
 
 Este porcentaje ajustado refleja mejor la efectividad de un jugador, considerando los tiros de tres puntos como más valiosos que los de dos puntos.
 
+### eTL - Eficiencia en Tiros Libres
+
+La **eficiencia en tiros libres (eTL)** calcula el porcentaje de aciertos en tiros libres por intento. La fórmula es:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}eTL=\frac{\text{Tiros\;Libres\;Convertidos}}{\text{Total\;Tiros\;Libres\;Intentados}}">
+  <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?eTL=\frac{\text{Tiros\;Libres\;Convertidos}}{\text{Total\;Tiros\;Libres\;Intentados}}">
+  <img alt="eTL Formula" src="https://latex.codecogs.com/svg.latex?eTL=\frac{\text{Tiros\;Libres\;Convertidos}}{\text{Total\;Tiros\;Libres\;Intentados}}">
+</picture>
+
+
+
+### eT2 - Eficiencia en Tiros de 2 Puntos
+
+La **eficiencia en tiros de 2 puntos (eT2)** calcula los puntos por intento de tiro de 2 puntos. La fórmula es:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}eT2=\frac{\text{Tiros\;de\;2\;Convertidos}\times{2}}{\text{Total\;Tiros\;de\;2\;Intentados}}">
+  <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?eT2=\frac{\text{Tiros\;de\;2\;Convertidos}\times{2}}{\text{Total\;Tiros\;de\;2\;Intentados}}">
+  <img alt="eT2 Formula" src="https://latex.codecogs.com/svg.latex?eT2=\frac{\text{Tiros\;de\;2\;Convertidos}\times{2}}{\text{Total\;Tiros\;de\;2\;Intentados}}">
+</picture>
+
+
+
+### eT3 - Eficiencia en Tiros de 3 Puntos
+
+La **eficiencia en tiros de 3 puntos (eT3)** calcula los puntos por intento de tiro de 3 puntos. La fórmula es:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://latex.codecogs.com/svg.latex?\color{white}eT3=\frac{\text{Tiros\;de\;3\;Convertidos}\times{3}}{\text{Total\;Tiros\;de\;3\;Intentados}}">
+  <source media="(prefers-color-scheme: light)" srcset="https://latex.codecogs.com/svg.latex?eT3=\frac{\text{Tiros\;de\;3\;Convertidos}\times{3}}{\text{Total\;Tiros\;de\;3\;Intentados}}">
+  <img alt="eT3 Formula" src="https://latex.codecogs.com/svg.latex?eT3=\frac{\text{Tiros\;de\;3\;Convertidos}\times{3}}{\text{Total\;Tiros\;de\;3\;Intentados}}">
+</picture>
+
+
+
 ## Funcionalidades
 
 1. **Obtención de Estadísticas:**
