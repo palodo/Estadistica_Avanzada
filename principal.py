@@ -25,8 +25,26 @@ def main():
     #display(estadisticas) para mostrarla en un entorno jupyter
     #print(estadisticas)
 
+    # Extraer la última fila como los totales del equipo
+    totales_equipo = estadisticas.iloc[-1]
+    estadisticas = estadisticas.iloc[:-1]
 
     
+   
+
+
+    # Convertir a un diccionario de valores clave
+    estadisticas_totales = {
+        'FGA': int(totales_equipo['T2'].split('/')[1]) + int(totales_equipo['T3'].split('/')[1]),
+        'FTA': int(totales_equipo['TL'].split('/')[1]),
+        'TOV': int(totales_equipo['BP']),
+        'Minutos': 4400 #Para esto, se me ocurre coger en el web scrapping los partidos jugados del equipo(se puede ver en la
+        #clasificación ) y multiplicarlo por 200.
+    }
+    print(estadisticas_totales)
+    estadisticas_avanzadas=calcular_usage_rate(estadisticas, estadisticas_totales)
+
+
 
 if __name__ == "__main__":
     main()
