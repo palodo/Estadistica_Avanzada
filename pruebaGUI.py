@@ -116,7 +116,18 @@ def main():
 
         with tab4:
             st.subheader('Rankings')
+    
+            # Título para la primera tabla
+            st.write('🕒 **Ranking por minutos jugados**')
+            # o también puedes usar: st.subheader('Ranking por minutos jugados')
             st.dataframe(r_minutos)
+            
+            # Espaciador opcional
+            st.write('')  # Añade un poco de espacio entre tablas
+            
+            # Título para la segunda tabla
+            st.write('📊 **Ranking por porcentaje de uso (USG%)**')
+            # o también puedes usar: st.subheader('Ranking por porcentaje de uso (USG%)')
             st.dataframe(r_uso)
 
 if __name__ == "__main__":
