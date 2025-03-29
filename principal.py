@@ -82,7 +82,7 @@ def main():
 
     
 
-    estadisticas_avanzadas=calcular_avanzadas(estadisticas, estadisticas_totales)
+    estadisticas_avanzadas=calcular_avanzadas(estadisticas, estadisticas_totales, min_partidos=partidos_jugados//3)#al menos han jugado 1/3 de los partidos
     print("\n\n")
     print(estadisticas_avanzadas)
     print("\n\n")

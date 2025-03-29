@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def convertir_a_minutos_decimales(tiempo):
     """Convierte un string MM:SS a minutos en decimal."""
     if isinstance(tiempo, str) and ":" in tiempo:
@@ -5,7 +8,7 @@ def convertir_a_minutos_decimales(tiempo):
         return minutos + segundos / 60
 
 
-def calcular_avanzadas(df, total_team_stats):
+def calcular_avanzadas_old(df, total_team_stats):
     """
     Calcula el porcentaje de uso (USG%) de cada jugador en base a las estadísticas del equipo.
     :param df: DataFrame con estadísticas individuales
@@ -107,3 +110,64 @@ def ranking_jugadores_mas_usados(estadisticas):
     
     return ranking
 
+def calcular_avanzadas(df, total_team_stats, min_partidos=10):
+    """
+    Calcula el porcentaje de uso (USG%) de cada jugador en base a las estadísticas del equipo.
+    :param df: DataFrame con estadísticas individuales
+    :param total_team_stats: Diccionario con estadísticas totales del equipo
+    :param min_partidos: Número mínimo de partidos para considerar las estadísticas
+    :return: DataFrame con la columna USG% añadida
+    """
+    team_fga = total_team_stats['FGA']
+    team_fta = total_team_stats['FTA']
+    team_tov = total_team_stats['TOV']
+    team_minutes = total_team_stats['Minutos']
+
+    # Convertir 'Partidos' a numérico para asegurar que las comparaciones sean correctas
+    df['Partidos'] = pd.to_numeric(df['Partidos'], errors='coerce')
+    
+    # Crear máscara para jugadores con suficientes partidos
+    mascara_partidos = df['Partidos'] >= min_partidos
+    
+    # Inicializar columnas con NaN
+    df['USG%'] = float('nan')
+    df['eFG%'] = float('nan')
+    df['eTL'] = float('nan')
+    df['eT2'] = float('nan')
+    df['eT3'] = float('nan')
+    
+    # Calcular USG% solo para jugadores con suficientes partidos
+    df.loc[mascara_partidos, 'USG%'] = 100 * (
+        (df.loc[mascara_partidos, 'T2'].apply(lambda x: int(x.split('/')[1])) +  # Intentos de 2pts
+         df.loc[mascara_partidos, 'T3'].apply(lambda x: int(x.split('/')[1])) +  # Intentos de 3pts
+         0.44 * df.loc[mascara_partidos, 'TL'].apply(lambda x: int(x.split('/')[1])) +  # Intentos de TL ajustados
+         df.loc[mascara_partidos, 'BP'].astype(int)) * (team_minutes / 5)
+    ) / (
+        df.loc[mascara_partidos, 'Minutos_decimal'] * (team_fga + 0.44 * team_fta + team_tov)
+    )
+
+    # eFG% (Effective Field Goal Percentage - Porcentaje de tiro efectivo)
+    df.loc[mascara_partidos, 'eFG%'] = ((
+        df.loc[mascara_partidos, 'T2'].apply(lambda x: int(x.split('/')[0])) + 
+        1.5 * df.loc[mascara_partidos, 'T3'].apply(lambda x: int(x.split('/')[0]))
+    ) / (
+        df.loc[mascara_partidos, 'T2'].apply(lambda x: int(x.split('/')[1])) + 
+        df.loc[mascara_partidos, 'T3'].apply(lambda x: int(x.split('/')[1]))
+    )) * 100
+    
+    # eTL - Calcula la eficiencia en tiros libres (Puntos por Intento de Tiro Libre)
+    # Evitar división por cero
+    mascara_tl = mascara_partidos & (df['TL'].apply(lambda x: int(x.split('/')[1])) > 0)
+    df.loc[mascara_tl, 'eTL'] = df.loc[mascara_tl, 'TL'].apply(lambda x: int(x.split('/')[0])) / df.loc[mascara_tl, 'TL'].apply(lambda x: int(x.split('/')[1]))
+
+    # eT2 - Calcula la eficiencia en tiros de 2 puntos (Puntos por Intento de Tiro de 2)
+    # Evitar división por cero
+    mascara_t2 = mascara_partidos & (df['T2'].apply(lambda x: int(x.split('/')[1])) > 0)
+    df.loc[mascara_t2, 'eT2'] = df.loc[mascara_t2, 'T2'].apply(lambda x: int(x.split('/')[0])) * 2 / df.loc[mascara_t2, 'T2'].apply(lambda x: int(x.split('/')[1]))
+
+    # eT3 - Calcula la eficiencia en tiros de 3 puntos (Puntos por Intento de Tiro de 3)
+    # Evitar división por cero
+    mascara_t3 = mascara_partidos & (df['T3'].apply(lambda x: int(x.split('/')[1])) > 0)
+    df.loc[mascara_t3, 'eT3'] = df.loc[mascara_t3, 'T3'].apply(lambda x: int(x.split('/')[0])) * 3 / df.loc[mascara_t3, 'T3'].apply(lambda x: int(x.split('/')[1]))
+
+    return df
