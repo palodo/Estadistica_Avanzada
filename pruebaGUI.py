@@ -85,7 +85,7 @@ def main():
         #Calcular rankings
 
         r_minutos=ranking_minutos(promedio.copy()).head(5)
-        r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy()).head(5)
+        r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy(), promedio).head(5)
         
         # Mostrar resultados
         st.header(f'Estadísticas del Equipo: {equipo_seleccionado}')

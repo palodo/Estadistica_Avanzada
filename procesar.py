@@ -96,17 +96,31 @@ def ranking_minutos(estadisticas):
     # Seleccionamos las columnas relevantes
     ranking = ranking[['Jugador', 'Minutos_decimal', 'Puntos']]
     
+    #Rename
+    ranking = ranking.rename(columns={'Minutos_decimal': 'Minutos PP', 'Puntos':'Puntos PP'})
+
     return ranking
 
 
-def ranking_jugadores_mas_usados(estadisticas):
+def ranking_jugadores_mas_usados(estadisticas,promedio):
     
     
     # Ordenamos los jugadores por los minutos jugados en orden descendente
     ranking = estadisticas.sort_values(by="USG%", ascending=False)
     
-    # Seleccionamos las columnas relevantes
-    ranking = ranking[['Jugador','USG%', 'Minutos', 'Partidos']]
+    # Seleccionamos las columnas relevantes de las estadísticas avanzadas
+    ranking = ranking[['Jugador', 'USG%']]
+    
+    # Unimos con la información relevante del dataframe de promedios
+    ranking = pd.merge(
+        ranking,
+        promedio[['Jugador','Puntos', 'AS','RT', 'Minutos_decimal']],
+        on='Jugador',
+        how='left'
+    )
+    
+    # Renombramos las columnas para mayor claridad
+    ranking = ranking.rename(columns={'Minutos_decimal': 'Minutos PP', 'AS': 'Asistencias PP', 'Puntos':'Puntos PP', 'RT':'Rebotes PP'})
     
     return ranking
 

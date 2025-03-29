@@ -96,8 +96,9 @@ def main():
 
 
     r_minutos=ranking_minutos(promedio.copy()).head(5)
-    r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy()).head(5)
+    r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy(),promedio.copy()).head(5)
     print(r_uso)
+    
 
     
 
