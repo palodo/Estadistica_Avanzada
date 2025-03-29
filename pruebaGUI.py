@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 # Importar funciones de los módulos originales
 from scrapping import obtener_equipos, obtener_pc_pj, obtener_id, obtener_estadisticas
 from procesar import calcular_avanzadas, calcular_rendimiento_equipo, convertir_a_minutos_decimales, ranking_minutos, ranking_jugadores_mas_usados
+from funcionesGUI import *
 
 def main():
     st.title('🏀 Estadística avanzada Tercera Feb')
@@ -99,16 +100,8 @@ def main():
         
         with tab2:
             st.subheader('Estadísticas Avanzadas de Jugadores')
-            # Crear un nuevo DataFrame solo con las columnas que queremos mostrar
-            df_avanzadas = pd.DataFrame({
-                'Jugador': estadisticas_avanzadas['Jugador'],
-                'USG%': estadisticas_avanzadas['USG%'],
-                'eFG%': estadisticas_avanzadas['eFG%'],
-                'eTL': estadisticas_avanzadas['eTL'],
-                'eT2': estadisticas_avanzadas['eT2'],
-                'eT3': estadisticas_avanzadas['eT3']
-            })
-            st.dataframe(df_avanzadas)
+            # Usar la nueva función en lugar del código original
+            show_advanced_stats(estadisticas_avanzadas)
         
         with tab3:
             st.subheader('Métricas de Rendimiento del Equipo')
