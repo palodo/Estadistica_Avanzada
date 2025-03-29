@@ -52,8 +52,36 @@ def main():
         #clasificación ) y multiplicarlo por 200.
     }
     #print(estadisticas_totales)
+
+
     estadisticas['Minutos_decimal'] = estadisticas['Minutos'].apply(convertir_a_minutos_decimales) #Creamos una columna llamada Minutos_decimal para
                                                                                                 #tener el valor numérico
+
+    #CREAMOS promedios
+    
+
+    estadisticas["Partidos"] = pd.to_numeric(estadisticas["Partidos"], errors="coerce")
+
+    promedio = estadisticas.copy()
+    # Seleccionar las columnas que queremos dividir
+    columnas_a_dividir = promedio.columns.difference(["Jugador","Minutos", "Enlace", "Fase", "Partidos"])
+
+    # Convertir esas columnas a numérico
+    promedio[columnas_a_dividir] = promedio[columnas_a_dividir].apply(pd.to_numeric, errors='coerce')
+
+    print(promedio.dtypes)
+
+    # Crear un nuevo DataFrame llamado 'promedio' con los valores divididos
+    
+    promedio[columnas_a_dividir] = promedio[columnas_a_dividir].div(promedio["Partidos"], axis=0)
+
+    print(promedio)
+
+
+
+
+    
+
     estadisticas_avanzadas=calcular_avanzadas(estadisticas, estadisticas_totales)
     print("\n\n")
     print(estadisticas_avanzadas)
@@ -67,6 +95,11 @@ def main():
 
 
 
+    r_minutos=ranking_minutos(promedio.copy()).head(5)
+    r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy()).head(5)
+    print(r_uso)
+
+    
 
 
 

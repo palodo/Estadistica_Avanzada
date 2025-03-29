@@ -5,10 +5,12 @@ from bs4 import BeautifulSoup
 
 # Importar funciones de los módulos originales
 from scrapping import obtener_equipos, obtener_pc_pj, obtener_id, obtener_estadisticas
-from procesar import calcular_avanzadas, calcular_rendimiento_equipo, convertir_a_minutos_decimales
+from procesar import calcular_avanzadas, calcular_rendimiento_equipo, convertir_a_minutos_decimales, ranking_minutos, ranking_jugadores_mas_usados
 
 def main():
-    st.title('🏀 Análisis de Estadísticas de Baloncesto')
+    st.title('🏀 Estadística avanzada Tercera Feb')
+    st.subheader("Desarrollado por Pablo López Domínguez")
+
     
     # URL base para la liga
     url_feb = "https://baloncestoenvivo.feb.es/resultados/ligaeba/8/2024"
@@ -62,12 +64,34 @@ def main():
         
         # Calcular rendimiento del equipo
         estadisticas_rendimiento = calcular_rendimiento_equipo(estadisticas_totales, puntos_permitidos)
+        #CREAMOS promedios
+    
+
+        estadisticas["Partidos"] = pd.to_numeric(estadisticas["Partidos"], errors="coerce")
+
+        promedio = estadisticas.copy()
+        # Seleccionar las columnas que queremos dividir
+        columnas_a_dividir = promedio.columns.difference(["Jugador","Minutos", "Enlace", "Fase", "Partidos"])
+
+        # Convertir esas columnas a numérico
+        promedio[columnas_a_dividir] = promedio[columnas_a_dividir].apply(pd.to_numeric, errors='coerce')
+
+        print(promedio.dtypes)
+
+        # Crear un nuevo DataFrame llamado 'promedio' con los valores divididos
+        
+        promedio[columnas_a_dividir] = promedio[columnas_a_dividir].div(promedio["Partidos"], axis=0)
+
+        #Calcular rankings
+
+        r_minutos=ranking_minutos(promedio.copy()).head(5)
+        r_uso=ranking_jugadores_mas_usados(estadisticas_avanzadas.copy()).head(5)
         
         # Mostrar resultados
         st.header(f'Estadísticas del Equipo: {equipo_seleccionado}')
         
         # Pestaña de estadísticas de jugadores
-        tab1, tab2, tab3 = st.tabs(['Estadísticas de Jugadores', 'Estadísticas Avanzadas', 'Rendimiento del Equipo'])
+        tab1, tab2, tab3, tab4 = st.tabs(['Estadísticas de Jugadores', 'Estadísticas Avanzadas', 'Rendimiento del Equipo', 'Rankings'])
         
         with tab1:
             st.subheader('Estadísticas Individuales')
@@ -89,6 +113,11 @@ def main():
         with tab3:
             st.subheader('Métricas de Rendimiento del Equipo')
             st.write(estadisticas_rendimiento)
+
+        with tab4:
+            st.subheader('Rankings')
+            st.dataframe(r_minutos)
+            st.dataframe(r_uso)
 
 if __name__ == "__main__":
     main()

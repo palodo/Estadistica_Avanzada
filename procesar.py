@@ -81,3 +81,29 @@ def calcular_rendimiento_equipo(totales_equipo, puntos_permitidos):
     }
     
     return estadisticas_avanzadas_equipo
+
+
+
+def ranking_minutos(estadisticas):
+    
+    
+    # Ordenamos los jugadores por los minutos jugados en orden descendente
+    ranking = estadisticas.sort_values(by="Minutos_decimal", ascending=False)
+    
+    # Seleccionamos las columnas relevantes
+    ranking = ranking[['Jugador', 'Minutos_decimal', 'Puntos']]
+    
+    return ranking
+
+
+def ranking_jugadores_mas_usados(estadisticas):
+    
+    
+    # Ordenamos los jugadores por los minutos jugados en orden descendente
+    ranking = estadisticas.sort_values(by="USG%", ascending=False)
+    
+    # Seleccionamos las columnas relevantes
+    ranking = ranking[['Jugador','USG%', 'Minutos', 'Partidos']]
+    
+    return ranking
+
