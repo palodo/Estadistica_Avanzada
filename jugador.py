@@ -64,19 +64,23 @@ def obtener_link_partido(equipo_nombre, jornada_numero):
 
     # Buscar el equipo en la jornada
     partidos = tabla_partidos.find_all("tr")
-
+    team=None
     for partido in partidos:
         equipo_local = partido.find("td", class_="equipo local")
         equipo_visitante = partido.find("td", class_="equipo visitante")
 
         nombre_local = equipo_local.text.strip() if equipo_local else ""
         nombre_visitante = equipo_visitante.text.strip() if equipo_visitante else ""
+        if nombre_local == equipo_nombre:
+            team=0
+        if nombre_visitante== equipo_nombre:
+            team=1
 
         if equipo_nombre in [nombre_local, nombre_visitante]:
             resultado = partido.find("td", class_="resultado")
             link_resultado = resultado.find("a")["href"]
             url_partido = f"{link_resultado}"
-            return url_partido
+            return url_partido, team
 
     print(f"❌ No se encontró ningún partido para {equipo_nombre} en {jornada_texto}")
     return None
