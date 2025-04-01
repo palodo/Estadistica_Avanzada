@@ -142,7 +142,9 @@ def show_advanced_stats(estadisticas_avanzadas):
     })
     
     # Mostrar el DataFrame
-    st.dataframe(df_avanzadas)
+    st.dataframe(df_avanzadas,hide_index=True,use_container_width=True, column_config={
+            "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
+        })
     
     # Explicación de las métricas
     st.markdown("### Explicación de las métricas avanzadas")
@@ -157,11 +159,7 @@ def show_advanced_stats(estadisticas_avanzadas):
         USG% = 100 × [(FGA + 0.44 × FTA + TOV) × (Team Minutes/5)] / [(Player Minutes) × (Team FGA + 0.44 × Team FTA + Team TOV)]
         ```
         
-        **Interpretación:**
-        - 15-20%: Jugador de rol complementario
-        - 20-25%: Contribuyente importante
-        - 25-30%: Jugador principal
-        - >30%: Estrella del equipo, pieza fundamental en la ofensiva
+        
         """)
     
     with st.expander("🏀 ¿Qué es eFG% (Porcentaje efectivo de tiro)?"):
@@ -173,11 +171,7 @@ def show_advanced_stats(estadisticas_avanzadas):
         eFG% = (FGM + 0.5 × 3PM) / FGA
         ```
         
-        **Interpretación:**
-        - <45%: Tirador deficiente
-        - 45-50%: Tirador promedio
-        - 50-55%: Buen tirador
-        - >55%: Excelente tirador
+       
         """)
     
     with st.expander("🎯 ¿Qué son eTL, eT2 y eT3?"):
@@ -202,11 +196,7 @@ def show_advanced_stats(estadisticas_avanzadas):
         ```
         Un valor de 3.0 significa un 100% de efectividad (todos los tiros de 3 acertados).
         
-        **Comparativa habitual:**
-        - Un eT2 promedio ronda 0.95-1.05 puntos por intento
-        - Un eT3 promedio ronda 0.90-1.10 puntos por intento
         
-        Si el eT3 de un jugador es superior a su eT2, generalmente es más eficiente que lance triples.
         """)
 
 

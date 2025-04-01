@@ -8,6 +8,8 @@ from scrapping import obtener_equipos, obtener_pc_pj, obtener_id, obtener_estadi
 from procesar import calcular_avanzadas, calcular_rendimiento_equipo, convertir_a_minutos_decimales, ranking_minutos, ranking_jugadores_mas_usados
 from funcionesGUI import *
 
+#st.set_page_config(page_title="Mi App", layout="wide") # Configuración de la página de Streamlit
+
 def main():
     st.title('🏀 Estadística avanzada Tercera Feb')
     st.subheader("Desarrollado por Pablo López Domínguez")
@@ -96,7 +98,9 @@ def main():
         
         with tab1:
             st.subheader('Estadísticas Individuales')
-            st.dataframe(estadisticas_mostrar)
+            st.dataframe(estadisticas_mostrar, hide_index=True,use_container_width=True, column_config={
+            "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
+        }) 
         
         with tab2:
             st.subheader('Estadísticas Avanzadas de Jugadores')
@@ -113,7 +117,10 @@ def main():
             # Título para la primera tabla
             st.write('🕒 **Ranking por minutos jugados**')
             # o también puedes usar: st.subheader('Ranking por minutos jugados')
-            st.dataframe(r_minutos)
+            st.dataframe(r_minutos,hide_index=True,use_container_width=True, column_config={
+            "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
+        })
+    
             
             # Espaciador opcional
             st.write('')  # Añade un poco de espacio entre tablas
@@ -121,7 +128,10 @@ def main():
             # Título para la segunda tabla
             st.write('📊 **Ranking por porcentaje de uso (USG%)**')
             # o también puedes usar: st.subheader('Ranking por porcentaje de uso (USG%)')
-            st.dataframe(r_uso)
+            st.dataframe(r_uso,hide_index=True,use_container_width=True, column_config={
+            "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
+        })
+    
 
 if __name__ == "__main__":
     main()
