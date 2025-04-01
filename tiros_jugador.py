@@ -3,6 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException
+import matplotlib
+matplotlib.use('Agg')  # Usar backend Agg (no GUI)
+import matplotlib.pyplot as plt
+from PIL import Image
+import numpy as np
 
 def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/partido/2415141"):
     """
@@ -16,16 +21,15 @@ def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/p
     Devuelve:
     - list: Lista de diccionarios con los tiros (posición, resultado, cuarto).
     """
-    # Configurar el navegador
     driver = webdriver.Chrome()
     driver.get(url)
     equipo_str = f"t{equipo}"
 
-    # Paso 1: Obtener el dorsal desde la tabla (sin clic, asumiendo que "Ficha" es por defecto)
+    # Paso 1: Obtener el dorsal desde la tabla
     try:
         fila_jugador = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.XPATH, "//td[@class='nombre jugador']/a[@href='" + enlace_jugador + "']/../.."))
-)
+            EC.presence_of_element_located((By.XPATH, "//td[@class='nombre jugador']/a[@href='" + enlace_jugador + "']/../.."))
+        )
         dorsal = fila_jugador.find_element(By.XPATH, "./td[@class='dorsal']").text
         dorsal_str = f"p-{dorsal}"
         print(f"Dorsal encontrado: {dorsal_str}")
@@ -63,8 +67,8 @@ def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/p
             
             if equipo_str in classes and dorsal_str in classes:
                 style = shoot.get_attribute("style")
-                top = float(style.split("top: ")[1].split("%")[0])  # Posición Y
-                left = float(style.split("left: ")[1].split("%")[0])  # Posición X
+                top = float(style.split("top: ")[1].split("%")[0])
+                left = float(style.split("left: ")[1].split("%")[0])
                 success = "Anotado" if "success1" in classes else "Fallado"
                 quarter = next((c for c in classes if c.startswith("q-")), "Desconocido")
 
@@ -77,17 +81,70 @@ def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/p
     driver.quit()
     return tiros
 
+def dibujar_tiros(tiros, imagen_cancha="court.png", output_file="shot_chart.png"):
+    """
+    Dibuja los tiros en una imagen de una cancha de baloncesto y guarda el resultado.
+    
+    Parámetros:
+    - tiros (list): Lista de diccionarios con los tiros (posición, resultado, cuarto).
+    - imagen_cancha (str): Ruta a la imagen de la cancha.
+    - output_file (str): Nombre del archivo donde se guardará el gráfico.
+    """
+    # Cargar la imagen de la cancha
+    img = Image.open(imagen_cancha)
+    img_array = np.array(img)
+
+    # Crear una figura con matplotlib
+    fig, ax = plt.subplots()
+    ax.imshow(img_array)
+
+    # Obtener las dimensiones de la imagen
+    height, width, _ = img_array.shape
+
+    # Dibujar cada tiro
+    for tiro in tiros:
+        left, top = tiro["posicion"]
+        resultado = tiro["resultado"]
+
+        # Convertir porcentajes a píxeles
+        x = (left / 100) * width
+        y = (top / 100) * height
+
+        # Color según el resultado
+        color = 'green' if resultado == "Anotado" else 'red'
+        marker = 'o' if resultado == "Anotado" else 'x'
+
+        # Dibujar el punto
+        ax.plot(x, y, marker=marker, color=color, markersize=10, markeredgewidth=2)
+
+    # Configurar el gráfico
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title("Gráfico de Tiros")
+
+    # Guardar el gráfico como imagen
+    plt.savefig(output_file, bbox_inches='tight')
+    plt.close(fig)  # Cerrar la figura para liberar memoria
+    print(f"Gráfico guardado como {output_file}")
+
 # Ejemplo de uso
 if __name__ == "__main__":
     equipo = 0  # Equipo 0 (t0)
     enlace_jugador = "https://baloncestoenvivo.feb.es/Jugador.aspx?i=951964&c=1901880&med=0"  # P. LOPEZ DOMINGUEZ
     url_partido = "https://baloncestoenvivo.feb.es/partido/2415141"
     
+    # Obtener los tiros
     lista_tiros = obtener_tiros(equipo, enlace_jugador, url_partido)
     
     if lista_tiros:
         print(f"Tiros encontrados para Equipo {equipo}, Jugador con enlace {enlace_jugador}:")
         for tiro in lista_tiros:
             print(f"Posición: {tiro['posicion']}, Resultado: {tiro['resultado']}, Cuarto: {tiro['cuarto']}")
+        
+        # Dibujar los tiros en la cancha y guardar el gráfico
+        dibujar_tiros(lista_tiros, "court.png", "shot_chart.png")
     else:
         print("No se encontraron tiros o hubo un error.")
+
+
+
