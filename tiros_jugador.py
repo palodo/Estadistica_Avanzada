@@ -120,7 +120,6 @@ def dibujar_tiros(tiros, imagen_cancha="court.png", output_file="shot_chart.png"
     # Configurar el gráfico
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title("Gráfico de Tiros")
 
     # Guardar el gráfico como imagen
     plt.savefig(output_file, bbox_inches='tight')
@@ -142,7 +141,7 @@ if __name__ == "__main__":
             print(f"Posición: {tiro['posicion']}, Resultado: {tiro['resultado']}, Cuarto: {tiro['cuarto']}")
         
         # Dibujar los tiros en la cancha y guardar el gráfico
-        dibujar_tiros(lista_tiros, "court.png", "shot_chart.png")
+        dibujar_tiros(lista_tiros, "court.jpg", "shot_chart.png")
     else:
         print("No se encontraron tiros o hubo un error.")
 
