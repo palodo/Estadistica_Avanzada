@@ -85,13 +85,3 @@ def obtener_link_partido(equipo_nombre, jornada_numero):
     print(f"❌ No se encontró ningún partido para {equipo_nombre} en {jornada_texto}")
     return None
 
-# ------------------------
-# 🎯 Prueba de la función
-# ------------------------
-
-equipo = "NB TORRENT"
-jornada = 22
-
-link = obtener_link_partido(equipo, jornada)
-if link:
-    print(f"✅ Link del partido: {link}")

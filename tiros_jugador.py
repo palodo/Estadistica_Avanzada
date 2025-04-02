@@ -8,6 +8,7 @@ matplotlib.use('Agg')  # Usar backend Agg (no GUI)
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+import time
 
 def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/partido/2415141"):
     """
@@ -21,15 +22,16 @@ def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/p
     Devuelve:
     - list: Lista de diccionarios con los tiros (posición, resultado, cuarto).
     """
+    # Configurar el navegador
     driver = webdriver.Chrome()
     driver.get(url)
     equipo_str = f"t{equipo}"
 
-    # Paso 1: Obtener el dorsal desde la tabla
+    # Paso 1: Obtener el dorsal desde la tabla (sin clic, asumiendo que "Ficha" es por defecto)
     try:
         fila_jugador = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//td[@class='nombre jugador']/a[@href='" + enlace_jugador + "']/../.."))
-        )
+    EC.presence_of_element_located((By.XPATH, "//td[@class='nombre jugador']/a[@href='" + enlace_jugador + "']/../.."))
+)
         dorsal = fila_jugador.find_element(By.XPATH, "./td[@class='dorsal']").text
         dorsal_str = f"p-{dorsal}"
         print(f"Dorsal encontrado: {dorsal_str}")
@@ -67,8 +69,8 @@ def obtener_tiros(equipo, enlace_jugador, url="https://baloncestoenvivo.feb.es/p
             
             if equipo_str in classes and dorsal_str in classes:
                 style = shoot.get_attribute("style")
-                top = float(style.split("top: ")[1].split("%")[0])
-                left = float(style.split("left: ")[1].split("%")[0])
+                top = float(style.split("top: ")[1].split("%")[0])  # Posición Y
+                left = float(style.split("left: ")[1].split("%")[0])  # Posición X
                 success = "Anotado" if "success1" in classes else "Fallado"
                 quarter = next((c for c in classes if c.startswith("q-")), "Desconocido")
 
@@ -126,24 +128,47 @@ def dibujar_tiros(tiros, imagen_cancha="court.png", output_file="shot_chart.png"
     plt.close(fig)  # Cerrar la figura para liberar memoria
     print(f"Gráfico guardado como {output_file}")
 
-# Ejemplo de uso
-if __name__ == "__main__":
-    equipo = 0  # Equipo 0 (t0)
-    enlace_jugador = "https://baloncestoenvivo.feb.es/Jugador.aspx?i=951964&c=1901880&med=0"  # P. LOPEZ DOMINGUEZ
-    url_partido = "https://baloncestoenvivo.feb.es/partido/2415141"
+
+
+def convertir_enlace_jugador(enlace):
+    """
+    Convierte un enlace de jugador del formato 'https://baloncestoenvivo.feb.es/Jugador.aspx?i=951964&c=2165978'
+    al formato 'https://baloncestoenvivo.feb.es/Jugador.aspx?i=951964&c=2165978&med=0'.
     
-    # Obtener los tiros
-    lista_tiros = obtener_tiros(equipo, enlace_jugador, url_partido)
+    Parámetros:
+    - enlace (str): Enlace en el formato original.
     
-    if lista_tiros:
-        print(f"Tiros encontrados para Equipo {equipo}, Jugador con enlace {enlace_jugador}:")
-        for tiro in lista_tiros:
-            print(f"Posición: {tiro['posicion']}, Resultado: {tiro['resultado']}, Cuarto: {tiro['cuarto']}")
+    Devuelve:
+    - str: Enlace en el formato esperado.
+    """
+    
         
-        # Dibujar los tiros en la cancha y guardar el gráfico
-        dibujar_tiros(lista_tiros, "court.jpg", "shot_chart.png")
-    else:
-        print("No se encontraron tiros o hubo un error.")
+    # Construir el nuevo enlace
+    nuevo_enlace = f"{enlace}&med=0"
+    return nuevo_enlace
+    
+    
+def convertir_enlace_partido(enlace):
+    """
+    Convierte un enlace de partido del formato 'https://baloncestoenvivo.feb.es/Partido.aspx?p=2415141'
+    al formato 'https://baloncestoenvivo.feb.es/partido/2415141'.
+    
+    Parámetros:
+    - enlace (str): Enlace en el formato original.
+    
+    Devuelve:
+    - str: Enlace en el formato esperado.
+    """
+    try:
+        # Extraer el valor de 'p' del enlace
+        id_partido = enlace.split('?p=')[1]
+        
+        # Construir el nuevo enlace
+        nuevo_enlace = f"https://baloncestoenvivo.feb.es/partido/{id_partido}"
+        return nuevo_enlace
+    except Exception as e:
+        print(f"Error al convertir el enlace del partido {enlace}: {e}")
+        return enlace  # Devolver el enlace original si hay un error
+    
 
-
-
+    
