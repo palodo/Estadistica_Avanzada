@@ -133,6 +133,7 @@ def main():
             st.dataframe(r_uso,hide_index=True,use_container_width=True, column_config={
             "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
         })
+            jugador1 = r_uso.iloc[0]['Jugador'] #jugador seleccionado
             
 
         with tab5:
