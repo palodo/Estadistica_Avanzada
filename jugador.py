@@ -45,16 +45,19 @@ def obtener_link_partido(equipo_nombre, jornada_numero):
         return partidos_cache[cache_key]["url"], partidos_cache[cache_key]["team"]
 
     # Si no está en caché, realizar la consulta
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Ejecuta en modo headless  # Evita problemas de memoria compartida
+    driver = webdriver.Chrome(options=options)
+
     url = "https://baloncestoenvivo.feb.es/calendario/tercerafeb/3/2024"
     driver.get(url)
-    time.sleep(3)  # Esperar a que cargue la página
+    time.sleep(1.5)  # Esperar a que cargue la página
 
     # Seleccionar el grupo "E-A"
     select_element = driver.find_element(By.ID, "_ctl0_MainContentPlaceHolderMaster_gruposDropDownList")
     select = Select(select_element)
     select.select_by_value("86387")  # Código del grupo "E-A"
-    time.sleep(3)  # Esperar la actualización
+    time.sleep(1.5)  # Esperar la actualización
 
     # Obtener el HTML después de la selección
     html = driver.page_source

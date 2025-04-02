@@ -11,7 +11,9 @@ import numpy as np
 import time
 
 def obtener_tiros(equipo, enlace_jugador, url):
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
     try:
         driver.get(url)
         equipo_str = f"t{equipo}"
