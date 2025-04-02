@@ -81,7 +81,7 @@ def main():
         # Convertir esas columnas a numérico
         promedio[columnas_a_dividir] = promedio[columnas_a_dividir].apply(pd.to_numeric, errors='coerce')
 
-        print(promedio.dtypes)
+        #print(promedio.dtypes)
 
         # Crear un nuevo DataFrame llamado 'promedio' con los valores divididos
         
@@ -134,7 +134,34 @@ def main():
             "Jugador": st.column_config.Column(pinned="left")  # Fijar la columna "Jugador"
         })
             jugador1 = r_uso.iloc[0]['Jugador'] #jugador seleccionado
-            
+            print(jugador1)
+            enlace_jugador_uso = estadisticas[estadisticas['Jugador'] == jugador1]['Enlace'].iloc[0]
+            enlace_jugador_uso=convertir_enlace_jugador(enlace_jugador_uso)#Le añado el &med=0
+            print(enlace_jugador_uso)
+            jornada_uso=partidos_jugados
+            lista_tiros_uso=[]
+
+            with st.spinner('Generando gráfico de tiros del jugador con más %USG...'):
+                for i in range(jornada_uso-2,jornada_uso+1):
+                    #print(i)
+                    enlace_partido_uso,numero_equipo_uso = obtener_link_partido(equipo_seleccionado, i)
+                    enlace_partido_uso=convertir_enlace_partido(enlace_partido_uso)
+                    if enlace_partido_uso:
+                        # Obtener los tiros del jugador
+                        lista_tiros_uso += obtener_tiros(numero_equipo_uso, enlace_jugador_uso, enlace_partido_uso)
+
+                if lista_tiros_uso:
+                    
+                    # Generar el gráfico de tiros
+                    output_file = f"graficos_tiros/shot_chart_uso.png"
+                    dibujar_tiros(lista_tiros_uso, "court.png", output_file)
+
+                    # Mostrar el gráfico en Streamlit
+                    st.image(output_file, caption=f"Gráfico de Tiros - {jugador1}")
+                    st.success("Gráfico generado correctamente.")
+                else:
+                    st.error("No se encontraron tiros para este jugador.")
+
 
         with tab5:
             st.subheader('Gráfico de Tiros del Jugador')
@@ -146,7 +173,7 @@ def main():
             # Obtener el enlace del jugador seleccionado
             enlace_jugador = estadisticas[estadisticas['Jugador'] == jugador_seleccionado]['Enlace'].iloc[0]
             enlace_jugador=convertir_enlace_jugador(enlace_jugador)#Le añado el &med=0
-            print(enlace_jugador)
+            #print(enlace_jugador)
             # Seleccionar la jornada
             jornada = st.slider('Selecciona la jornada', min_value=1, max_value=22, value=22)
 
