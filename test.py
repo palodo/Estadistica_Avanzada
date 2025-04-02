@@ -15,6 +15,7 @@ def generar_grafico_tiros(lista_tiros, jugador, jornada=None, output_suffix=""):
     return None
 
 def main():
+    
     st.title('🏀 Estadística avanzada Tercera Feb')
     st.subheader("Desarrollado por Pablo López Domínguez")
 
@@ -99,7 +100,7 @@ def main():
             enlace_jugador_uso = convertir_enlace_jugador(enlace_jugador_uso)
             jornada_uso = partidos_jugados
 
-            if not st.session_state.uso_graph_generated and st.session_state.active_tab != "tab5":
+            if not st.session_state.active_tab != "tab5":
                 with st.spinner('Generando gráfico de tiros del jugador con más %USG...'):
                     lista_tiros_uso = []
                     for i in range(jornada_uso-2, jornada_uso+1):
@@ -112,14 +113,10 @@ def main():
                     if output_file:
                         st.image(output_file, caption=f"Gráfico de Tiros - {jugador1}")
                         st.success("Gráfico generado correctamente.")
-                        st.session_state.uso_graph_generated = True  # Marcar como generado
+                          # Marcar como generado
                     else:
                         st.error("No se encontraron tiros para este jugador.")
-            elif st.session_state.uso_graph_generated:
-                # Mostrar el gráfico ya generado sin recalcular
-                output_file = f"graficos_tiros/shot_chart_{jugador1}_uso.png"
-                st.image(output_file, caption=f"Gráfico de Tiros - {jugador1}")
-                st.success("Gráfico cargado desde memoria.")
+            
 
         with tab5:
             st.session_state.active_tab = "tab5"  # Marcar que estamos en tab5
